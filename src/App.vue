@@ -1,29 +1,17 @@
 <template>
   <div id="app">
-    <Navigation />
-    <h1>Untappd-Compare</h1>
-    <h2>Input two valid Untappd usernames</h2>
-    <p>If you don't know any, you can use i.e. {{ sampleUsernamesString() }}.</p>
-    <ComparisonForm v-on:update-comparison="updateComparison" />
-    <Comparison v-bind:comparison="comparison" />
-    <Comparisons v-bind:comparisons="comparisons" />
+    <router-link :to="{name: 'Home'}">- Home -</router-link>
+    <router-link v-if="!loggedIn" :to="{name: 'Login'}">Login -</router-link>
+    <router-link v-if="!loggedIn" :to="{name: 'Register'}">Register -</router-link>
+    <a v-if="loggedIn" v-on:click="handleLogout()" href="/">Logout -</a>
+    <router-link v-if="loggedIn" :to="{name: 'Comparisons'}">All comparisons -</router-link>
+    <router-view v-bind:usernames="sampleUsernamesString()" v-bind:loggedin="loggedIn" />
   </div>
 </template>
 
 <script>
-import ComparisonForm from "./components/ComparisonForm.vue";
-import Navigation from "./components/Navigation.vue";
-import Comparison from "./components/Comparison.vue";
-import Comparisons from "./components/Comparisons";
-
 export default {
   name: "App",
-  components: {
-    ComparisonForm,
-    Navigation,
-    Comparison,
-    Comparisons
-  },
   data: function() {
     return {
       sampleUsernames: [
@@ -34,20 +22,24 @@ export default {
         "jimmyjames360",
         "athingcalledjoe"
       ],
-      comparison: {},
-      comparisons: []
+      comparisons: {},
+      loggedIn: false
     };
   },
-  created: async function() {
-    const response = await fetch("http://localhost:3002/api/comparisons");
-    this.comparisons = await response.json();
+  updated: function() {
+    if (document.cookie.split(";").find(cookie => cookie.includes("token"))) {
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
   },
   methods: {
     sampleUsernamesString: function() {
       return this.sampleUsernames.map(username => `'${username}'`).join(", ");
     },
-    updateComparison: function(newComparison) {
-      this.comparison = newComparison;
+    handleLogout: function() {
+      console.log("handling a logout click");
+      this.$cookies.remove("token");
     }
   }
 };

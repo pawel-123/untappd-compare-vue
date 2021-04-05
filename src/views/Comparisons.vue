@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>There are {{comparisons.length}} comparisons in the database</h2>
+    <h2>There are {{comparisons.length}} comparisons:</h2>
     <table>
       <thead>
         <tr>
@@ -15,7 +15,9 @@
           <td>{{comparison.untappdUsers[0]}}</td>
           <td>{{comparison.untappdUsers[1]}}</td>
           <td>{{comparison.commonBeers.length}}</td>
-          <td>Click here</td>
+          <td>
+            <router-link :to="{ name: 'Comparison', params: {comp_id: comparison.id}}">Click here</router-link>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -23,8 +25,20 @@
 </template>
 
 <script>
+import { baseUrl } from "../../api.js";
+
 export default {
   name: "Comparisons",
-  props: ["comparisons"]
+  data: function() {
+    return {
+      comparisons: {}
+    };
+  },
+  created: async function() {
+    const response = await fetch(`${baseUrl}/comparisons`, {
+      credentials: "include"
+    });
+    this.comparisons = await response.json();
+  }
 };
 </script>
