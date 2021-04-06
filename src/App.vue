@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import VueJwtDecode from "vue-jwt-decode";
+
 export default {
   name: "App",
   data: function() {
@@ -35,12 +37,8 @@ export default {
       user: {}
     };
   },
-  updated: function() {
-    if (document.cookie.split(";").find(cookie => cookie.includes("token"))) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+  created: function() {
+    this.checkLoginStatus();
   },
   methods: {
     sampleUsernamesString: function() {
@@ -52,6 +50,22 @@ export default {
     },
     addUser: function(newUser) {
       this.user = newUser;
+    },
+    checkLoginStatus: function() {
+      if (
+        this.$cookies
+          .get("token")
+          .toLowerCase()
+          .startsWith("bearer")
+      ) {
+        this.loggedIn = true;
+        const { username, id } = VueJwtDecode.decode(
+          this.$cookies.get("token").substring(7)
+        );
+        this.user = { username, id };
+      } else {
+        this.loggedIn = false;
+      }
     }
   }
 };
