@@ -4,7 +4,8 @@
     <router-link v-if="!loggedIn" :to="{name: 'Login'}">Login -</router-link>
     <router-link v-if="!loggedIn" :to="{name: 'Register'}">Register -</router-link>
     <a v-if="loggedIn" v-on:click="handleLogout()" href="/">Logout -</a>
-    <router-link v-if="loggedIn" :to="{name: 'Comparisons'}">All comparisons -</router-link>
+    <router-link v-if="loggedIn" :to="{name: 'AllComparisons'}">All comparisons -</router-link>
+    <router-link v-if="loggedIn" :to="{name: 'MyComparisons'}">My comparisons -</router-link>
     <router-view v-bind:usernames="sampleUsernamesString()" v-bind:loggedin="loggedIn" />
   </div>
 </template>
@@ -23,7 +24,8 @@ export default {
         "athingcalledjoe"
       ],
       comparisons: {},
-      loggedIn: false
+      loggedIn: false,
+      user: {}
     };
   },
   updated: function() {

@@ -3,8 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import Comparisons from '../views/Comparisons.vue'
+import AllComparisons from '../views/AllComparisons.vue'
 import Comparison from '../views/Comparison.vue'
+import MyComparisons from '../views/MyComparisons.vue'
 
 Vue.use(VueRouter)
 
@@ -25,14 +26,19 @@ const routes = [
     component: Register
   },
   {
+    path: '/comparisons/users',
+    name: 'MyComparisons',
+    component: MyComparisons
+  },
+  {
     path: '/comparisons/:comp_id',
     name: 'Comparison',
     component: Comparison
   },
   {
     path: '/comparisons',
-    name: 'Comparisons',
-    component: Comparisons
+    name: 'AllComparisons',
+    component: AllComparisons
   },
 ]
 

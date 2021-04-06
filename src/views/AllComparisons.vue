@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div v-if="comparisons.length > 0">
     <h2>There are {{comparisons.length}} comparisons:</h2>
-    <table>
+    <ComparisonTable v-bind:comparisons="comparisons" />
+    <!-- <table>
       <thead>
         <tr>
           <th>User 1</th>
@@ -20,15 +21,19 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table>-->
   </div>
 </template>
 
 <script>
 import { baseUrl } from "../../api.js";
+import ComparisonTable from "../components/ComparisonTable.vue";
 
 export default {
-  name: "Comparisons",
+  name: "AllComparisons",
+  components: {
+    ComparisonTable
+  },
   data: function() {
     return {
       comparisons: {}
