@@ -21,7 +21,6 @@ export default {
         }
       );
       const comparison = await response.json();
-      console.log("comparison from SaveComparison.vue :", comparison);
       this.$emit("update-comparison", comparison);
     }
   }
