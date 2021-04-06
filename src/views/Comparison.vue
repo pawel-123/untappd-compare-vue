@@ -2,7 +2,11 @@
   <div v-if="comparison.untappdUsers">
     <h2>{{comparison.untappdUsers[0]}} and {{comparison.untappdUsers[1]}} have {{comparison.commonBeers.length}} beers in common:</h2>
     <ComparisonTable v-bind:comparison="comparison" />
-    <SaveComparison v-bind:comparison="comparison" v-bind:user="user" />
+    <SaveComparison
+      v-bind:comparison="comparison"
+      v-bind:user="user"
+      v-on:update-comparison="updateComparison"
+    />
   </div>
 </template>
 
@@ -29,6 +33,11 @@ export default {
       credentials: "include"
     });
     this.comparison = await response.json();
+  },
+  methods: {
+    updateComparison: function(newComparison) {
+      this.comparison = newComparison;
+    }
   }
 };
 </script>
