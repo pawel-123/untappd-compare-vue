@@ -12,6 +12,7 @@
     <router-view
       v-bind:usernames="sampleUsernamesString()"
       v-bind:loggedin="loggedIn"
+      v-bind:user="user"
       v-on:add-user="addUser"
     />
   </div>
@@ -45,14 +46,16 @@ export default {
       return this.sampleUsernames.map(username => `'${username}'`).join(", ");
     },
     handleLogout: function() {
-      console.log("handling a logout click");
+      this.loggedIn = false;
       this.$cookies.remove("token");
     },
     addUser: function(newUser) {
+      this.loggedIn = true;
       this.user = newUser;
     },
     checkLoginStatus: function() {
       if (
+        this.$cookies.isKey("token") &&
         this.$cookies
           .get("token")
           .toLowerCase()

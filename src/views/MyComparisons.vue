@@ -2,19 +2,19 @@
   <div>
     <div v-if="comparisons.length > 0">
       <h2>There are {{comparisons.length}} comparisons:</h2>
-      <ComparisonTable v-bind:comparisons="comparisons" />
+      <ComparisonsTable v-bind:comparisons="comparisons" />
     </div>
   </div>
 </template>
 
 <script>
 import { baseUrl } from "../../api.js";
-import ComparisonTable from "../components/ComparisonTable.vue";
+import ComparisonsTable from "../components/ComparisonsTable.vue";
 
 export default {
   name: "MyComparisons",
   components: {
-    ComparisonTable
+    ComparisonsTable
   },
   data: function() {
     return {

@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { baseUrl } from "../../api.js";
+
 export default {
   name: "ComparisonForm",
   props: ["usernames"],
@@ -26,18 +28,19 @@ export default {
   },
   methods: {
     handleSubmit: async function() {
-      const response = await fetch("http://localhost:3002/api/comparisons", {
-        method: "POST",
+      const response = await fetch(`${baseUrl}/comparisons`, {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
+        method: "POST",
         body: JSON.stringify({
           user1: this.user1,
           user2: this.user2
         })
       });
+
       const comparison = await response.json();
-      this.$emit("update-comparison", comparison);
       this.$router.push({
         name: "Comparison",
         params: { comp_id: comparison.id }
