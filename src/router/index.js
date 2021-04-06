@@ -26,7 +26,7 @@ const routes = [
     component: Register
   },
   {
-    path: '/comparisons/users',
+    path: '/comparisons/users/:user_id',
     name: 'MyComparisons',
     component: MyComparisons
   },

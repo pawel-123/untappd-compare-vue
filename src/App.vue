@@ -5,8 +5,15 @@
     <router-link v-if="!loggedIn" :to="{name: 'Register'}">Register -</router-link>
     <a v-if="loggedIn" v-on:click="handleLogout()" href="/">Logout -</a>
     <router-link v-if="loggedIn" :to="{name: 'AllComparisons'}">All comparisons -</router-link>
-    <router-link v-if="loggedIn" :to="{name: 'MyComparisons'}">My comparisons -</router-link>
-    <router-view v-bind:usernames="sampleUsernamesString()" v-bind:loggedin="loggedIn" />
+    <router-link
+      v-if="loggedIn"
+      :to="{name: 'MyComparisons', params: {user_id: user.id}}"
+    >My comparisons -</router-link>
+    <router-view
+      v-bind:usernames="sampleUsernamesString()"
+      v-bind:loggedin="loggedIn"
+      v-on:add-user="addUser"
+    />
   </div>
 </template>
 
@@ -42,6 +49,9 @@ export default {
     handleLogout: function() {
       console.log("handling a logout click");
       this.$cookies.remove("token");
+    },
+    addUser: function(newUser) {
+      this.user = newUser;
     }
   }
 };

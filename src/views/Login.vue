@@ -36,9 +36,13 @@ export default {
           password: this.password
         })
       });
-      const data = await response.json();
-      const token = data.token;
+      const loginData = await response.json();
+      const token = loginData.token;
       this.$cookies.set("token", `Bearer ${token}`);
+      this.$emit("add-user", {
+        username: loginData.username,
+        id: loginData.id
+      });
       this.$router.push({ name: "Home" });
     }
   }
