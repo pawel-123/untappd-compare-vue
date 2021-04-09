@@ -31,14 +31,15 @@ export default {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
           username: this.username,
           password: this.password
         })
       });
+
       const loginData = await response.json();
-      const token = loginData.token;
-      this.$cookies.set("token", `Bearer ${token}`);
+
       this.$emit("add-user", {
         username: loginData.username,
         id: loginData.id
